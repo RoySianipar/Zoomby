@@ -1,0 +1,410 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container-fluid body-content">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    *@
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <div class="col-lg-7 text right">
+                            <h4 class="text right box-title"><b>Search Zoom Meeting</b></h4>
+                        </div>
+                        <div class="col-lg-5 text-right">
+                            <h4 class="box-title">
+                                <small><b>Today : </b></small>09/06/2022
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label class="col-sm-4 control-label">Meeting Date</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control" id="reservation">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7" style="margin-bottom:0px;">
+                                <button type="button" class="btn btn-sm btn-info" onclick="Search()"><i class="fa fa-search"></i> Search</button>
+
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        New Schedule
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            PIC
+                                                        </label>
+                                                        <div class="form-control col-md-6">
+                                                            <select name="pic" class="form-control slect2" id="Pic">
+                                                                <option value="">--PIC--</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            ZoomAccount
+                                                        </label>
+                                                        <div class="form-control col-md-6">
+                                                            <select name="Zoom" class="form-control slect2" id="Zoom">
+                                                                <option value="">--Zoom--</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            Start Date
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="StartDate" type="date" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            End Date
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="EndDate" type="date" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            Agenda
+                                                        </label>
+                                                        <div class="col-md-6 form-control">
+                                                            <input id="Agenda" type="text" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            Link Zoom
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="Link" type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" onclick="Save()">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">                   
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="example1"
+                                               class="table table-bordered table-striped no-footer dataTable"
+                                               role="grid"
+                                               aria-describedby="example1_info"
+                                               style="">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="text-center sorting_asc"
+                                                        style="vertical-align: middle; width: 46.5312px;"
+                                                        width="4%"
+                                                        tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="No: activate to sort column descending"
+                                                        aria-sort="ascending">No</th>
+
+                                                    <th class="text-center sorting"
+                                                        style="vertical-align: middle; width: 54.4688px;"
+                                                        width="11%"
+                                                        tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1" a
+                                                        ria-label="PIC: activate to sort column ascending">PIC</th>
+
+                                                    <th class="text-center sorting"
+                                                        style="vertical-align: middle; width: 76.3594px;"
+                                                        width="10%"
+                                                        tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Zoom Acc: activate to sort column ascending">Zoom Acc</th>
+
+                                                    <th class="text-center sorting"
+                                                        style="vertical-align: middle; width: 67.4062px;"
+                                                        width="20%"
+                                                        tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Date &amp;amp; Time: activate to sort column ascending">Date &amp; Time</th>
+
+                                                    <th class="text-center sorting"
+                                                        style="vertical-align: middle; width: 95.25px;"
+                                                        width="25%"
+                                                        tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Agenda: activate to sort column ascending">Agenda</th>
+
+                                                    <th class="text-center sorting"
+                                                        style="vertical-align: middle; width: 61.4531px;"
+                                                        width="25%" tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Link: activate to sort column ascending">Link</th>
+
+                                                    <th class="text-center sorting_disabled"
+                                                        style="vertical-align: middle; width: 75.5312px;"
+                                                        width="5%"
+                                                        rowspan="1"
+                                                        colspan="1"
+                                                        aria-label="Option">Option</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tbody">
+                                                <tr class="odd">
+                                                    <td valign="top"
+                                                        colspan="7"
+                                                        class="dataTables_empty">
+                                                        No data available in table
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button next disabled" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">Next</a></li></ul></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="example-modal">
+        <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-teal-gradient">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">New Schedule</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            PIC
+                                                        </label>
+                                                        <div class="form-control col-md-6">
+                                                            <select name="pic" class="form-control slect2" id="Pic">
+                                                                <option value="">--PIC--</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            ZoomAccount
+                                                        </label>
+                                                        <div class="form-control col-md-6">
+                                                            <select name="Zoom" class="form-control slect2" id="Zoom">
+                                                                <option value="">--Zoom--</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            Start Date
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="StartDate" type="date" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            End Date
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="EndDate" type="date" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="control-label col-md-2">
+                                                            Agenda
+                                                        </label>
+                                                        <div class="col-md-6 form-control">
+                                                            <input id="Agenda" type="text" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 control-label">
+                                                            Link Zoom
+                                                        </label>
+                                                        <div class="col-sm-4 form-control">
+                                                            <input id="Link" type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" onclick="Save()">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+@section scripts
+    {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            Read();
+            GetPic();
+            GetZoom();
+        });
+
+        const Read = () => {
+            $("#example1").DataTable({
+                ajax: {
+                    "url": "@Url.Action("GetAll","Home")",
+                    "type": "Get",
+                    "dataType": "json",
+                },
+                columns: [
+                    { data: "id" },
+                    { data: "pic.name" },
+                    { data: "account.name" },
+                    {
+                        render: (data, type, row) => {
+                            return new Date(row.startDate).toDateString()
+                        }
+                    },
+                    { data: "agenda" },
+                    { data: "linkAddress" },
+                    {
+                        render: (data, type, row) => {
+                            console.log(row)
+                            return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit">
+          Edit
+        </button>`
+                        }
+                    }
+
+                ]
+            })
+        }
+
+        const Save = () => {
+            debugger;
+            var data = new Object();
+            data.picId = $("#Pic").val();
+            data.zoomAccountId = $("#Zoom").val();
+            data.startDate = $("#StartDate").val();
+            data.endDate = $("#EndDate").val();
+            data.agenda = $("#Agenda").val();
+            data.linkAddress = $("#Link").val();
+
+            $.ajax({
+                "url": "@Url.Action("Save","Home")",
+                "type": "Post",
+                "data": data,
+                "datatype": "json"
+            }).then((data) => {
+                if (data != null) {
+                    alert("ok");
+                }
+                else {
+                    alert("gagal");
+                }
+            });
+
+        }
+
+
+
+        const GetPic = () => {
+            $.ajax({
+                "url": "@Url.Action("GetPic","Home")",
+                "type": "Get",
+                "datatype": "json"
+            }).then((data) => {
+                var pic = $("#Pic");
+                pic.html('');
+                $.each(data, (i, value) => {
+                    $("<option></option>").val(value.id).text(value.name).appendTo(pic);
+                });
+            })
+        }
+
+        const GetZoom = () => {
+            $.ajax({
+                "url": "@Url.Action("GetZoom","Home")",
+                "type": "Get",
+                "datatype": "json"
+            }).then((data) => {
+                var zoom = $("#Zoom");
+                zoom.html('');
+                $.each(data, (i, value) => {
+                    $("<option></option>").val(value.id).text(value.name).appendTo(zoom);
+                });
+            })
+        }
+    </script>
+}
