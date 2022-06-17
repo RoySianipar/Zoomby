@@ -31,8 +31,54 @@ public class HomeController : Controller
         var listZoom = _context.ZoomSchedulers
             .Include(x => x.PIC)
             .Include(y => y.Account)
+            .Where(x => x.IsDeleted == false && x.StartDate.Date >= DateTime.Now.Date && x.EndDate.Date <= DateTime.Now.Date)
             .ToList();
+
+        //var listZoom = _context.ZoomSchedulers.ToList();
         return Ok(new { data = listZoom  });
+    }
+
+    public IActionResult GetByDateRange(DateTime StartDate, DateTime EndDate)
+    {
+        var listZoom = _context.ZoomSchedulers
+            .Include(x => x.PIC)
+            .Include(y => y.Account)
+            .Where(x => x.IsDeleted == false && (x.StartDate.Date >= StartDate.Date 
+            && x.EndDate.Date <= EndDate.Date))
+            .ToList();
+        return Ok(new { data = listZoom });
+    }
+
+
+    public IActionResult GetById(int id)
+    {
+        var listZoom = _context.ZoomSchedulers
+            .Where(x => x.Id == id).FirstOrDefault();
+        return Ok(listZoom);
+    }
+    public IActionResult Deleted(int id)
+    {
+        var listZoom = _context.ZoomSchedulers
+            .Where(x => x.Id == id).FirstOrDefault();
+        try
+        {
+            if(listZoom != null)
+            {
+                listZoom.IsDeleted = true;
+                _context.Entry(listZoom).State = EntityState.Modified;
+                _context.SaveChanges();
+                return Ok(listZoom);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        catch(Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        
     }
     public IActionResult GetPIC()
     {
@@ -48,7 +94,16 @@ public class HomeController : Controller
         }
         else
         {
-            throw new Exception();
+            var result = _context.ZoomSchedulers.Where(x => x.Id == data.Id).FirstOrDefault();
+            result.PICId = data.PICId;
+            result.ZoomAccountId = data.ZoomAccountId;
+            result.StartDate = data.StartDate;
+            result.EndDate = data.EndDate;
+            result.Agenda = data.Agenda;
+            result.LinkAddress = data.LinkAddress;
+            _context.Entry(result).State = EntityState.Modified;
+            _context.SaveChanges();
+            return Ok(data);
         }
     }
     public IActionResult GetZoom()
